@@ -52,4 +52,15 @@ public class RegistrationTest {
         $("[data-testid=register-submit-button]").click();
         $("[data-testid=register-error-message]").shouldHave(text("Username already taken"));
     }
+
+    @Test
+    void passwordMismatchTest() {
+        String randomUserName = "auto_user_42";
+        open("/register");
+        $("[data-testid=register-login-input]").setValue(randomUserName);
+        $("[data-testid=register-password-input]").setValue("password1");
+        $("[data-testid=confirm-password-input]").setValue("password2");
+        $("[data-testid=register-submit-button]").click();
+        $("[data-testid=register-error-message]").shouldHave(text("Passwords do not match"));
+    }
 }
