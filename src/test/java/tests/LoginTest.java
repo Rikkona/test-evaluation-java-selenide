@@ -75,4 +75,13 @@ public class LoginTest {
         $("[data-testid=submit-button]").click();
         $("[data-testid=error-message]").shouldHave(text("Login and password are required (minimum 3 and 6 characters)"));
     }
+
+    @Test
+    void shortUsernameTest() {
+        open("/login");
+        $("[data-testid=login-input]").setValue("us");
+        $("[data-testid=password-input]").setValue("password1");
+        $("[data-testid=submit-button]").click();
+        $("[data-testid=error-message]").shouldHave(text("Login must be at least 3 characters"));
+    }
 }
