@@ -81,4 +81,14 @@ public class RegistrationTest {
         $("[data-testid=register-submit-button]").click();
         $("[data-testid=register-error-message]").shouldHave(text("Login is required (minimum 3 characters)"));
     }
+
+    @Test
+    void shortUsernameTest() {
+        open("/register");
+        $("[data-testid=register-login-input]").setValue("us");
+        $("[data-testid=register-password-input]").setValue("password1");
+        $("[data-testid=confirm-password-input]").setValue("password1");
+        $("[data-testid=register-submit-button]").click();
+        $("[data-testid=register-error-message]").shouldHave(text("Login must be at least 3 characters"));
+    }
 }
