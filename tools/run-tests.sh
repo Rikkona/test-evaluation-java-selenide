@@ -16,6 +16,7 @@ case "${1-}" in
     printf '%s\n' 'login-short-password [login] Login with a password below the minimum length'
     printf '%s\n' 'registration-success [registration] Successful registration' 'registration-duplicate [registration] Duplicate registration' 'registration-mismatched-passwords [registration] Registration with mismatched passwords'
     printf '%s\n' 'registration-empty-password [registration] Registration without a password'
+    printf '%s\n' 'registration-empty-username [registration] Registration without a username'
     exit 0 ;;
   one|group) [ "$#" -eq 2 ] || usage ;;
   all) [ "$#" -eq 1 ] || usage ;;
@@ -89,6 +90,11 @@ case "$1:${2-}" in
     require_sut
     printf '%s\n' '+ gradle --offline test --tests '\''tests.RegistrationTest.missingPasswordTest'\'''
     exec gradle --offline test --tests 'tests.RegistrationTest.missingPasswordTest'
+    ;;
+  'one:registration-empty-username')
+    require_sut
+    printf '%s\n' '+ gradle --offline test --tests '\''tests.RegistrationTest.missingUsernameTest'\'''
+    exec gradle --offline test --tests 'tests.RegistrationTest.missingUsernameTest'
     ;;
   'group:registration')
     require_sut
