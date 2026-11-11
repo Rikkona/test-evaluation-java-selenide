@@ -12,7 +12,7 @@ if [ "${1-}" = "--allow-sut" ]; then allow_sut=true; shift; fi
 case "${1-}" in
   list)
     [ "$#" -eq 1 ] || usage
-    printf '%s\n' 'login-success [login] Successful login' 'login-failure [login] Unsuccessful login'
+    printf '%s\n' 'login-success [login] Successful login' 'login-failure [login] Unsuccessful login' 'login-empty-password [login] Login without a password'
     exit 0 ;;
   one|group) [ "$#" -eq 2 ] || usage ;;
   all) [ "$#" -eq 1 ] || usage ;;
@@ -36,6 +36,11 @@ case "$1:${2-}" in
     require_sut
     printf '%s\n' '+ gradle --offline test --tests '\''tests.LoginTest.wrongPasswordTest'\'''
     exec gradle --offline test --tests 'tests.LoginTest.wrongPasswordTest'
+    ;;
+  'one:login-empty-password')
+    require_sut
+    printf '%s\n' '+ gradle --offline test --tests '\''tests.LoginTest.missingPasswordTest'\'''
+    exec gradle --offline test --tests 'tests.LoginTest.missingPasswordTest'
     ;;
   'group:login')
     require_sut
