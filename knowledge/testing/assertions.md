@@ -14,6 +14,8 @@ Canonical: checks stay inline in test bodies against the elements/state the code
 ```
 
 ## Do
+
+- Name test methods after the specific scenario or input being exercised, for example `wrongPasswordTest` for login with an incorrect password.
 - Assert in the test; reach page state through the exposed elements/methods, not new locators.
 - Reuse the framework's retrying conditions; the expected texts come from the test data source.
 - Mirror the canonical test verbatim: same chain form and check count — one scenario asserts only its expected outcome.

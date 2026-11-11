@@ -34,4 +34,13 @@ public class LoginTest {
         $("[data-testid=submit-button]").click();
         $("[data-testid=welcome-message]").shouldHave(text("Welcome, user1!"));
     }
+
+    @Test
+    void wrongPasswordTest() {
+        open("/login");
+        $("[data-testid=login-input]").setValue("user1");
+        $("[data-testid=password-input]").setValue("wrong-password");
+        $("[data-testid=submit-button]").click();
+        $("[data-testid=error-message]").shouldHave(text("Wrong login or password"));
+    }
 }
