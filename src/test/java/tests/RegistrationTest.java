@@ -102,4 +102,11 @@ public class RegistrationTest {
         $("[data-testid=register-submit-button]").click();
         $("[data-testid=register-error-message]").shouldHave(text("Password must be at least 6 characters"));
     }
+
+    @Test
+    void emptyFormTest() {
+        open("/register");
+        $("[data-testid=register-submit-button]").click();
+        $("[data-testid=register-error-message]").shouldHave(text("Login and password are required (minimum 3 and 6 characters)"));
+    }
 }
