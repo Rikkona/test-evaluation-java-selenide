@@ -1,0 +1,37 @@
+package tests;
+
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static com.codeborne.selenide.Selenide.open;
+
+public class LoginTest {
+    @BeforeAll
+    static void beforeAll() {
+        Configuration.baseUrl = "https://autotests.ai/stack/backend-java-spring/frontend-typescript-react";
+        Configuration.browser = "chrome";
+        Configuration.browserSize = "1920x1080";
+        Configuration.headless = true;
+        Configuration.timeout = 5_000;
+    }
+
+    @AfterEach
+    void afterEach() {
+        closeWebDriver();
+    }
+
+    @Test
+    void successfulLoginTest() {
+        open("/login");
+        $("[data-testid=login-input]").setValue("user1");
+        $("[data-testid=password-input]").setValue("password1");
+        $("[data-testid=submit-button]").click();
+        $("[data-testid=welcome-message]").shouldHave(text("Welcome, user1!"));
+    }
+}

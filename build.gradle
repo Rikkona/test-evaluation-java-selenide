@@ -1,0 +1,34 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(
+            "com.codeborne:selenide:7.19.0",
+            "org.seleniumhq.selenium:selenium-java:4.52.0",
+            "org.junit.jupiter:junit-jupiter:6.1.3")
+    testRuntimeOnly(
+            "org.junit.platform:junit-platform-launcher",
+            "org.slf4j:slf4j-simple:2.0.20")
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+    /* html/junit reports are enabled explicitly — warm-runner init scripts disable them */
+    reports.html.required = false
+    reports.junitXml.required = false
+}
