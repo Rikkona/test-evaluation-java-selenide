@@ -5,8 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -29,14 +27,29 @@ public class RegistrationTest {
 
     @Test
     void successfulRegistrationTest() {
-        String username = "qa" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
-        String password = UUID.randomUUID().toString();
-
+        String randomUserName = "auto_user_42";
         open("/register");
-        $("[data-testid=register-login-input]").setValue(username);
-        $("[data-testid=register-password-input]").setValue(password);
-        $("[data-testid=confirm-password-input]").setValue(password);
+        $("[data-testid=register-login-input]").setValue(randomUserName);
+        $("[data-testid=register-password-input]").setValue("password1");
+        $("[data-testid=confirm-password-input]").setValue("password1");
         $("[data-testid=register-submit-button]").click();
-        $("[data-testid=welcome-message]").shouldHave(text("Welcome, " + username + "!"));
+        $("[data-testid=welcome-message]").shouldHave(text("Welcome, " + randomUserName + "!"));
+    }
+
+    @Test
+    void duplicateRegistrationTest() {
+        String randomUserName = "auto_user_42";
+        open("/register");
+        $("[data-testid=register-login-input]").setValue(randomUserName);
+        $("[data-testid=register-password-input]").setValue("password1");
+        $("[data-testid=confirm-password-input]").setValue("password1");
+        $("[data-testid=register-submit-button]").click();
+        $("[data-testid=welcome-message]").shouldHave(text("Welcome, " + randomUserName + "!"));
+        open("/register");
+        $("[data-testid=register-login-input]").setValue(randomUserName);
+        $("[data-testid=register-password-input]").setValue("password1");
+        $("[data-testid=confirm-password-input]").setValue("password1");
+        $("[data-testid=register-submit-button]").click();
+        $("[data-testid=register-error-message]").shouldHave(text("Username already taken"));
     }
 }
