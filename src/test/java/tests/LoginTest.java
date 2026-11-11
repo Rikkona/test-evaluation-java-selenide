@@ -45,6 +45,15 @@ public class LoginTest {
     }
 
     @Test
+    void wrongUsernameTest() {
+        open("/login");
+        $("[data-testid=login-input]").setValue("unknownuser7f3d9a");
+        $("[data-testid=password-input]").setValue("password1");
+        $("[data-testid=submit-button]").click();
+        $("[data-testid=error-message]").shouldHave(text("Wrong login or password"));
+    }
+
+    @Test
     void missingPasswordTest() {
         open("/login");
         $("[data-testid=login-input]").setValue("user1");
